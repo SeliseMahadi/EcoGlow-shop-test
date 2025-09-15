@@ -1,0 +1,27 @@
+<section class="home-collections">
+<div class="collections-grid">
+{% for collection in collections limit: section.settings.collections_to_show %}
+<div class="collection-card">
+<a href="{{ collection.url }}">
+{% if collection.image %}
+{{ collection.image | image_url: width: 400 | image_tag: alt: collection.title }}
+{% endif %}
+<h3>{{ collection.title }}</h3>
+</a>
+</div>
+{% endfor %}
+</div>
+</section>
+
+
+{% schema %}
+{
+"name": "Collection Grid",
+"settings": [
+{ "type": "range", "id": "collections_to_show", "min": 2, "max": 12, "step": 1, "default": 4, "label": "Number of collections to show" }
+],
+"presets": [
+{ "name": "Collection Grid", "category": "Homepage" }
+]
+}
+{% endschema %}

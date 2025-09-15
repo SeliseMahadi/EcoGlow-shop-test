@@ -1,0 +1,18 @@
+ {
+  "sections": {
+  "slider": {
+  "type": "home-slider"
+  },
+  "products": {
+  "type": "home-product-grid"
+  },
+  "collections": {
+  "type": "home-collection-grid"
+  }
+  },
+  "order": [
+  "slider",
+  "products",
+  "collections"
+  ]
+  }

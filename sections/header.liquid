@@ -1,0 +1,47 @@
+<header class="site-header">
+<div class="header-inner">
+<a class="logo" href="/">
+{% if section.settings.logo != blank %}
+{{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: alt: shop.name, class: 'logo-img' }}
+{% else %}
+<span class="logo-text">{{ shop.name }}</span>
+{% endif %}
+</a>
+
+
+{% if section.settings.menu != blank %}
+<nav class="main-nav" role="navigation" aria-label="Main">
+<ul>
+{% for link in section.settings.menu.links %}
+<li>
+<a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
+</li>
+{% endfor %}
+</ul>
+</nav>
+{% endif %}
+</div>
+</header>
+
+
+{% schema %}
+{
+"name": "Header",
+"settings": [
+{ "type": "image_picker", "id": "logo", "label": "Logo" },
+{
+  "type": "range",
+  "id": "logo_width",
+  "label": "Logo width",
+  "min": 50,
+  "max": 500,
+  "step": 5,
+  "default": 150
+},
+{ "type": "link_list", "id": "menu", "label": "Main menu" }
+],
+"presets": [
+{ "name": "Header" }
+]
+}
+{% endschema %}

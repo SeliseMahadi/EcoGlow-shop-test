@@ -1,0 +1,30 @@
+<footer class="site-footer">
+<div class="footer-inner">
+{% if section.settings.footer_menu != blank %}
+<nav class="footer-nav" aria-label="Footer">
+<ul>
+{% for link in section.settings.footer_menu.links %}
+<li><a href="{{ link.url }}">{{ link.title }}</a></li>
+{% endfor %}
+</ul>
+</nav>
+{% endif %}
+<div class="copyright">
+{{ section.settings.copyright | default: '© ' | append: shop.name }}
+</div>
+</div>
+</footer>
+
+
+{% schema %}
+{
+"name": "Footer",
+"settings": [
+{ "type": "link_list", "id": "footer_menu", "label": "Footer menu" },
+{ "type": "text", "id": "copyright", "label": "Copyright text", "default": "© " }
+],
+"presets": [
+{ "name": "Footer" }
+]
+}
+{% endschema %}
