@@ -9,6 +9,53 @@
  */
 {
   "sections": {
+    "17627702831212119c": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_f6a2da7_TqLEkC": {
+          "type": "ai_gen_block_f6a2da7",
+          "settings": {
+            "max_width": 1200,
+            "spacing": 40,
+            "grid_gap": 30,
+            "background_color": "#FFFFFF",
+            "text_color": "#1a1a1a",
+            "accent_color": "#d4282d",
+            "feature_height": 500,
+            "feature_category": "Featured",
+            "feature_title": "The Future of Sustainable Fashion in Modern Design",
+            "feature_excerpt": "Exploring how contemporary designers are reshaping the industry with eco-conscious materials and innovative production methods that prioritize both style and sustainability.",
+            "feature_author": "Jane Smith",
+            "feature_date": "March 15, 2024",
+            "content_padding": 25,
+            "feature_title_size": 42,
+            "category_size": 12,
+            "excerpt_size": 16,
+            "meta_size": 14,
+            "sidebar_category_1": "Style",
+            "sidebar_title_1": "Minimalist Wardrobe Essentials for Every Season",
+            "sidebar_date_1": "March 12, 2024",
+            "sidebar_category_2": "Trends",
+            "sidebar_title_2": "Color Palettes Defining This Year's Collections",
+            "sidebar_date_2": "March 10, 2024",
+            "sidebar_category_3": "Culture",
+            "sidebar_title_3": "Behind the Scenes with Emerging Fashion Designers",
+            "sidebar_date_3": "March 8, 2024",
+            "sidebar_image_size": 120,
+            "sidebar_gap": 25,
+            "sidebar_title_size": 16,
+            "sidebar_category_size": 11,
+            "sidebar_meta_size": 13,
+            "divider_spacing": 20
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_f6a2da7_TqLEkC"
+      ],
+      "settings": {}
+    },
     "slider": {
       "type": "home-slider",
       "blocks": {
@@ -45,6 +92,7 @@
   "order": [
     "slider",
     "products",
-    "collections"
+    "collections",
+    "17627702831212119c"
   ]
 }
