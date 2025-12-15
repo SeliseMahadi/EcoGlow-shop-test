@@ -88,7 +88,7 @@
         "type": "grid-img-with-text",
         "settings": {
           "heading": "Introducing Our Summer Collection, Now available!",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sollicitudin odio pellentesque nec sed.",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sollicitudin odio pellentesq nunc sed. Amet ultricies sit proin enim nunc diam.",
           "button_text": "SHOP NOW",
           "button_link": "",
           "image_1": "shopify://shop_images/1dc9331a4b7fe3e59b771f3adaf15f33c70cc893_1.png",
@@ -99,6 +99,45 @@
       },
       "limited-offer": {
         "type": "limited-offer",
+        "blocks": {
+          "product_Xg3zKL": {
+            "type": "product",
+            "settings": {
+              "product": "bangle-bracelet-with-feathers"
+            }
+          },
+          "product_BFrMNP": {
+            "type": "product",
+            "settings": {
+              "product": "gold-bird-necklace"
+            }
+          },
+          "product_F7LGLN": {
+            "type": "product",
+            "settings": {
+              "product": "bangle-bracelet"
+            }
+          },
+          "product_VNcw6N": {
+            "type": "product",
+            "settings": {
+              "product": "bangle-bracelet-with-feathers"
+            }
+          },
+          "product_icVYyB": {
+            "type": "product",
+            "settings": {
+              "product": "chain-bracelet"
+            }
+          }
+        },
+        "block_order": [
+          "product_Xg3zKL",
+          "product_BFrMNP",
+          "product_F7LGLN",
+          "product_VNcw6N",
+          "product_icVYyB"
+        ],
         "settings": {
           "heading": "Limited Time Offer",
           "subtitle": "Egestas quam arcu convallis ipsum iaculis neque.",
