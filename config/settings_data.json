@@ -13,15 +13,74 @@
       "header": {
         "type": "header",
         "settings": {
+          "logo": "shopify://shop_images/d0c1e2220e1a2b4ba8137eadfbb7244fb6434add.png",
           "logo_width": 150,
-          "menu": ""
+          "main_menu": "main-menu-2"
         }
       },
       "footer": {
         "type": "footer",
         "settings": {
-          "footer_menu": "main-menu",
-          "copyright": "©"
+          "address": "",
+          "phone": "",
+          "email": "",
+          "facebook": "",
+          "instagram": "",
+          "twitter": "",
+          "youtube": "",
+          "newsletter_title": "Newsletter",
+          "newsletter_text": ""
+        }
+      },
+      "hero-section-big-img": {
+        "type": "hero-section-big-img",
+        "settings": {
+          "hero_image": "shopify://shop_images/ddf2414a5812d85ec039cd984a6fb9c5cae73c25.png",
+          "heading": "New Arrival",
+          "description": "Egestas quam arcu convallis ipsum iaculis neque.\n Volutpat venenatis tincidunt non fermentum a velit mai soli ta haiplu out. Venenatis tincidunt non fermentum a velit mai soli ta haiplu out.",
+          "button_text": "SHOP NOW",
+          "button_link": ""
+        }
+      },
+      "collection-grid": {
+        "type": "collection-grid",
+        "settings": {
+          "title": "Featured Collection",
+          "subtitle": "Egestas quam arcu convallis ipsum iaculis neque.",
+          "collection_1": "tshirt",
+          "collection_2": "pants",
+          "collection_3": "hoodie",
+          "collection_4": "sports-bra",
+          "collection_5": "bomber-jacket"
+        }
+      },
+      "product-with-tab": {
+        "type": "product-with-tab",
+        "settings": {
+          "heading": "Latest Collections",
+          "subtitle": "Egestas quam arcu convallis ipsum iaculis neque. Volutpat venenatis tincidunt non fermentum a velit ut.",
+          "products_per_tab": 12,
+          "button_label": "VIEW ALL PRODUCTS",
+          "button_link": ""
+        }
+      },
+      "grid-img-with-text": {
+        "type": "grid-img-with-text",
+        "settings": {
+          "heading": "Introducing Our Summer Collection, Now available!",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sollicitudin odio pellentesque nec sed.",
+          "button_text": "SHOP NOW",
+          "button_link": ""
+        }
+      },
+      "limited-offer": {
+        "type": "limited-offer",
+        "settings": {
+          "heading": "Limited Time Offer",
+          "subtitle": "Egestas quam arcu convallis ipsum iaculis neque.",
+          "badge_text": "50% Discount",
+          "button_label": "VIEW ALL PRODUCTS",
+          "button_link": ""
         }
       }
     },
