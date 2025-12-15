@@ -20,6 +20,42 @@
       },
       "footer": {
         "type": "footer",
+        "blocks": {
+          "menu_kjPfbe": {
+            "type": "menu",
+            "settings": {
+              "title": "About Company",
+              "menu": "main-menu-2"
+            }
+          },
+          "menu_3Aifbj": {
+            "type": "menu",
+            "settings": {
+              "title": "Help",
+              "menu": "main-menu-1"
+            }
+          },
+          "menu_dXdDW9": {
+            "type": "menu",
+            "settings": {
+              "title": "Contact",
+              "menu": "main-menu"
+            }
+          },
+          "menu_qKT8nm": {
+            "type": "menu",
+            "settings": {
+              "title": "SALES PARTNER",
+              "menu": "customer-account-main-menu"
+            }
+          }
+        },
+        "block_order": [
+          "menu_kjPfbe",
+          "menu_3Aifbj",
+          "menu_dXdDW9",
+          "menu_qKT8nm"
+        ],
         "settings": {
           "logo": "shopify://shop_images/df965a4e3633ac916dd2142e75b29df18f9fb943.png",
           "address": "Saimon Centre, Level-3 House No-4A, Road No-22, Gulshan-01, Dhaka-1212.",
