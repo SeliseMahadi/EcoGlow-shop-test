@@ -21,15 +21,16 @@
       "footer": {
         "type": "footer",
         "settings": {
-          "address": "",
-          "phone": "",
-          "email": "",
-          "facebook": "",
-          "instagram": "",
-          "twitter": "",
-          "youtube": "",
+          "logo": "shopify://shop_images/df965a4e3633ac916dd2142e75b29df18f9fb943.png",
+          "address": "Saimon Centre, Level-3 House No-4A, Road No-22, Gulshan-01, Dhaka-1212.",
+          "phone": "Phone: +8801404000777",
+          "email": "support@turaag.com",
+          "facebook": "#",
+          "instagram": "#",
+          "twitter": "#",
+          "youtube": "#",
           "newsletter_title": "Newsletter",
-          "newsletter_text": ""
+          "newsletter_text": "Become a part of Turaag Active community and receive updates, event invitation and special offers."
         }
       },
       "hero-section-big-img": {
