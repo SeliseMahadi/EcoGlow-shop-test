@@ -1,47 +1,117 @@
-<header class="site-header">
-<div class="header-inner">
-<a class="logo" href="/">
-{% if section.settings.logo != blank %}
-{{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: alt: shop.name, class: 'logo-img' }}
-{% else %}
-<span class="logo-text">{{ shop.name }}</span>
-{% endif %}
-</a>
+<header class="w-full bg-white header-section">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
 
+    <!-- LEFT: Logo -->
+    <div class="flex items-center space-x-2 header-logo-section">
+      {% if section.settings.logo %}
+        <img
+          src="{{ section.settings.logo | image_url: width: section.settings.logo_width }}"
+          alt="Logo"
+          style="width: {{ section.settings.logo_width }}px; height: auto;"
+          class="max-h-16 w-auto header-logo-image"
+        >
+      {% endif %}
+    </div>
 
-{% if section.settings.menu != blank %}
-<nav class="main-nav" role="navigation" aria-label="Main">
-<ul>
-{% for link in section.settings.menu.links %}
-<li>
-<a href="{{ link.url }}" {% if link.current %}aria-current="page"{% endif %}>{{ link.title }}</a>
-</li>
-{% endfor %}
-</ul>
-</nav>
-{% endif %}
-</div>
+    <!-- CENTER: Main Menu -->
+    <nav class="hidden md:flex items-center space-x-10 text-sm font-medium header-main-menu-section">
+
+      {% for link in linklists[section.settings.main_menu].links %}
+    
+        {% if link.links != blank %}
+          <!-- Dropdown Menu Item -->
+          <div class="relative group">
+    
+            <button class="flex items-center hover:text-gray-600 header-menu-item-button">
+              {{ link.title }}
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+    
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden group-hover:block bg-white border shadow-lg p-4 w-48 header-menu-item-dropdown">
+              {% for sublink in link.links %}
+                <a href="{{ sublink.url }}" class="block py-1 hover:text-gray-700">
+                  {{ sublink.title }}
+                </a>
+              {% endfor %}
+            </div>
+    
+          </div>
+    
+        {% else %}
+          <!-- Simple Menu Link -->
+          <a href="{{ link.url }}" class="hover:text-gray-600 header-menu-item-link">
+            {{ link.title }}
+          </a>
+        {% endif %}
+    
+      {% endfor %}
+    
+    </nav>
+
+    <!-- RIGHT: Icons -->
+    <div class="flex items-center space-x-6 text-gray-800">
+      <a href="#" class="text-sm hover:text-gray-600 header-menu-item-link">LOGIN/REGISTER</a>
+
+      <!-- Search Icon -->
+      <button class="header-menu-item-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </button>
+
+      <!-- Wishlist -->
+      <button class="header-menu-item-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 21C12 21 5 13.732 5 9.5C5 6.462 7.462 4 10.5 4C12.24 4 13.91 4.876 15 6.236C16.09 4.876 17.76 4 19.5 4C22.538 4 25 6.462 25 9.5C25 13.732 18 21 18 21H12Z" />
+        </svg>
+      </button>
+
+      <!-- Cart -->
+      <button class="header-menu-item-button">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 3h2l3 12h10l3-8H7" />
+        </svg>
+      </button>
+    </div>
+
+  </div>
 </header>
 
 
 {% schema %}
 {
-"name": "Header",
-"settings": [
-{ "type": "image_picker", "id": "logo", "label": "Logo" },
-{
-  "type": "range",
-  "id": "logo_width",
-  "label": "Logo width",
-  "min": 50,
-  "max": 500,
-  "step": 5,
-  "default": 150
-},
-{ "type": "link_list", "id": "menu", "label": "Main menu" }
-],
-"presets": [
-{ "name": "Header" }
-]
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Upload Logo"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo width",
+      "min": 50,
+      "max": 500,
+      "step": 5,
+      "default": 150
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main Navigation Menu"
+    }
+  ]
 }
 {% endschema %}

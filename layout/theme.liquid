@@ -4,14 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ page_title }}</title>
-{{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+{% comment %} {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }} {% endcomment %}
+{{ 'output.css' | asset_url | stylesheet_tag: preload: true }}
 {{ content_for_header }}
 </head>
 <body>
-{% section 'header' %}
-<main id="MainContent" role="main">
+    {% section 'header' %}
 {{ content_for_layout }}
-</main>
 {% section 'footer' %}
 </body>
 </html>

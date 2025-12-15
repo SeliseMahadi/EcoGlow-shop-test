@@ -1,0 +1,184 @@
+{% comment %}
+  Limited Time Offer – Product Slider
+{% endcomment %}
+
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+
+<section class="py-20 limited-offer-section">
+  <div class="max-w-[1400px] mx-auto px-6 text-center">
+
+    {% if section.settings.heading != blank %}
+      <h2 class="text-4xl font-semibold mb-3">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <p class="text-gray-500 max-w-xl mx-auto mb-12">
+        {{ section.settings.subtitle }}
+      </p>
+    {% endif %}
+
+    <!-- Slider -->
+    <div class="relative">
+      <div class="swiper limitedOfferSwiper">
+        <div class="swiper-wrapper">
+
+          {% for block in section.blocks %}
+            {% assign product = block.settings.product %}
+            {% if product %}
+              <div class="swiper-slide px-4">
+                <a href="{{ product.url }}" class="block">
+
+                  <div class="relative bg-[#D9DDE3] overflow-hidden">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="absolute top-3 right-3 bg-red-600 text-white text-xs px-3 py-1 rounded-full">
+                        {{ section.settings.badge_text }}
+                      </span>
+                    {% endif %}
+
+                    <img
+                      src="{{ product.featured_image | image_url: width: 600 }}"
+                      alt="{{ product.title }}"
+                      class="mx-auto"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  <h3 class="mt-5 font-medium">
+                    {{ product.title }}
+                  </h3>
+
+                  <p class="text-sm mt-1">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="line-through text-red-500 mr-2">
+                        {{ product.compare_at_price | money }}
+                      </span>
+                    {% endif %}
+                    <span class="text-gray-700">
+                      {{ product.price | money }}
+                    </span>
+                  </p>
+
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+        </div>
+
+        <!-- Arrows -->
+        <div class="swiper-button-prev !text-black"></div>
+        <div class="swiper-button-next !text-black"></div>
+      </div>
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <div class="mt-14">
+        <a
+          href="{{ section.settings.button_link }}"
+          class="inline-block bg-black text-white px-10 py-4 text-sm"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{{ 'swiper-bundle.min.js' | asset_url | script_tag }}
+
+<script>
+  function initLimitedOfferSwiper(section) {
+    const swiperEl = section.querySelector('.limitedOfferSwiper');
+
+    if (!swiperEl || swiperEl.classList.contains('swiper-initialized')) return;
+
+    new Swiper(swiperEl, {
+      slidesPerView: 1.1,
+      spaceBetween: 20,
+      loop: true,
+      navigation: {
+        nextEl: swiperEl.querySelector('.swiper-button-next'),
+        prevEl: swiperEl.querySelector('.swiper-button-prev'),
+      },
+      breakpoints: {
+        640: { slidesPerView: 2.2 },
+        1024: { slidesPerView: 3.2 },
+        1280: { slidesPerView: 4 },
+      },
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document
+      .querySelectorAll('.limited-offer-section')
+      .forEach(initLimitedOfferSwiper);
+  });
+
+  document.addEventListener('shopify:section:load', function (event) {
+    initLimitedOfferSwiper(event.target);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Limited Offer Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Egestas quam arcu convallis ipsum iaculis neque."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Discount Badge Text",
+      "default": "50% Discount"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "VIEW ALL PRODUCTS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Limited Offer Products",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
+{% endschema %}

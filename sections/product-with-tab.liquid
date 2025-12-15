@@ -1,0 +1,311 @@
+{% comment %}
+  Product with Tabs – Dynamic Tabs with Collections
+{% endcomment %}
+
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+  assign section_class = 'product-with-tab-section'
+  assign tab_blocks = section.blocks | where: 'type', 'tab'
+%}
+
+<section
+  id="{{ section_id }}"
+  class="{{ section_class }} py-16"
+>
+  <div class="max-w-[1400px] mx-auto px-6 text-center">
+    {% if section.settings.heading != blank %}
+      <h2 class="text-4xl font-semibold mb-2">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% if section.settings.subtitle != blank %}
+      <p class="text-gray-500 max-w-xl mx-auto mb-6">
+        {{ section.settings.subtitle }}
+      </p>
+    {% endif %}
+
+    {% if tab_blocks.size > 0 %}
+      <!-- Tabs -->
+      <div class="mt-6 flex justify-center gap-6 flex-wrap">
+        {% for block in tab_blocks %}
+          <button
+            id="tab-{{ block.id }}-{{ section.id }}"
+            class="tab-btn pb-1 {% if forloop.first %}text-black border-b-2 border-black font-medium{% else %}text-gray-500 hover:text-black{% endif %}"
+            data-tab-id="{{ block.id }}"
+            aria-label="{{ block.settings.tab_label | default: 'Tab' }}"
+          >
+            {{ block.settings.tab_label | default: 'Tab' }}
+          </button>
+        {% endfor %}
+      </div>
+
+      <!-- Swiper Containers (one per tab) -->
+      <div class="relative mt-12">
+        {% for block in tab_blocks %}
+          {% assign collection = block.settings.collection %}
+          <div
+            id="swiper-container-{{ block.id }}-{{ section.id }}"
+            class="swiper productTabSwiper"
+            data-tab-id="{{ block.id }}"
+            {% unless forloop.first %}style="display: none;"{% endunless %}
+          >
+            <div class="swiper-wrapper">
+              {% if collection and collection.products.size > 0 %}
+                {% for product in collection.products limit: section.settings.products_per_tab %}
+                  <div class="swiper-slide px-4">
+                    <a href="{{ product.url }}" class="block">
+                      <div class="bg-white">
+                        <img
+                          src="{{ product.featured_image | image_url: width: 600 }}"
+                          alt="{{ product.title | escape }}"
+                          width="600"
+                          height="600"
+                          class="mx-auto"
+                          loading="lazy"
+                        />
+                        <h3 class="mt-4 font-medium">
+                          {{ product.title }}
+                        </h3>
+                        <p class="text-gray-600 text-sm mt-1">
+                          {% if product.compare_at_price > product.price %}
+                            <span class="line-through text-red-500 mr-2">
+                              {{ product.compare_at_price | money }}
+                            </span>
+                          {% endif %}
+                          <span class="text-gray-700">
+                            {{ product.price | money }}
+                          </span>
+                        </p>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <div class="swiper-slide px-4">
+                  <p class="text-gray-500">No products found in this collection.</p>
+                </div>
+              {% endif %}
+            </div>
+            <!-- Navigation -->
+            <div class="swiper-button-prev !text-black"></div>
+            <div class="swiper-button-next !text-black"></div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.button_label != blank %}
+      <div class="mt-10">
+        <a
+          href="{{ section.settings.button_link }}"
+          class="inline-block bg-black text-white px-8 py-3"
+        >
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .tab-btn {
+    transition: color 0.15s ease, border-bottom 0.15s ease;
+  }
+{% endstylesheet %}
+
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+
+<script>
+  function initProductTabSwiper(section) {
+    const sectionId = '{{ section.id }}';
+    const tabButtons = section.querySelectorAll('[data-tab-id]');
+    const swiperContainers = section.querySelectorAll('.productTabSwiper');
+    const swipers = {};
+
+    if (!tabButtons.length || !swiperContainers.length) return;
+
+    // Initialize all Swipers
+    swiperContainers.forEach((container) => {
+      const tabId = container.getAttribute('data-tab-id');
+      const swiperEl = container;
+
+      if (swiperEl.classList.contains('swiper-initialized')) {
+        // Destroy existing swiper if it exists
+        const existingSwiper = swiperEl.swiper;
+        if (existingSwiper) {
+          existingSwiper.destroy(true, true);
+        }
+      }
+
+      const swiper = new Swiper(swiperEl, {
+        slidesPerView: 1.1,
+        spaceBetween: 20,
+        loop: swiperEl.querySelectorAll('.swiper-slide').length > 4,
+        navigation: {
+          nextEl: swiperEl.querySelector('.swiper-button-next'),
+          prevEl: swiperEl.querySelector('.swiper-button-prev'),
+        },
+        breakpoints: {
+          640: { slidesPerView: 2.2 },
+          1024: { slidesPerView: 3.2 },
+          1280: { slidesPerView: 4 },
+        },
+      });
+
+      swipers[tabId] = swiper;
+    });
+
+    function activateTab(tabId) {
+      // Hide all containers and deactivate all tabs
+      swiperContainers.forEach((container) => {
+        container.style.display = 'none';
+      });
+
+      tabButtons.forEach((btn) => {
+        btn.classList.remove('text-black', 'border-b-2', 'border-black', 'pb-1', 'font-medium');
+        btn.classList.add('text-gray-500');
+      });
+
+      // Show selected container and activate its tab
+      const selectedContainer = section.querySelector(`#swiper-container-${tabId}-${sectionId}`);
+      const selectedTab = section.querySelector(`#tab-${tabId}-${sectionId}`);
+
+      if (selectedContainer) {
+        selectedContainer.style.display = 'block';
+        const swiper = swipers[tabId];
+        if (swiper) {
+          setTimeout(() => {
+            swiper.update();
+            swiper.slideToLoop(0);
+          }, 50);
+        }
+      }
+
+      if (selectedTab) {
+        selectedTab.classList.remove('text-gray-500');
+        selectedTab.classList.add('text-black', 'border-b-2', 'border-black', 'pb-1', 'font-medium');
+      }
+    }
+
+    // Set up click handlers for all tabs
+    tabButtons.forEach((btn) => {
+      const tabId = btn.getAttribute('data-tab-id');
+      
+      btn.addEventListener('click', () => activateTab(tabId));
+      btn.setAttribute('tabindex', '0');
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activateTab(tabId);
+        }
+      });
+    });
+
+    // Initialize first tab
+    const firstTabId = tabButtons[0]?.getAttribute('data-tab-id');
+    if (firstTabId) {
+      const firstSwiper = swipers[firstTabId];
+      if (firstSwiper) {
+        setTimeout(() => {
+          firstSwiper.update();
+        }, 100);
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document
+      .querySelectorAll('.product-with-tab-section')
+      .forEach(initProductTabSwiper);
+  });
+
+  document.addEventListener('shopify:section:load', function (event) {
+    const section = event.target.querySelector('.product-with-tab-section') || event.target;
+    if (section.classList.contains('product-with-tab-section')) {
+      initProductTabSwiper(section);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product with Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Latest Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Egestas quam arcu convallis ipsum iaculis neque. Volutpat venenatis tincidunt non fermentum a velit ut."
+    },
+    {
+      "type": "range",
+      "id": "products_per_tab",
+      "label": "Products per tab",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "VIEW ALL PRODUCTS"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_label",
+          "label": "Tab Label",
+          "default": "New Tab"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product with Tabs",
+      "blocks": [
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "FOR MEN",
+            "collection": ""
+          }
+        },
+        {
+          "type": "tab",
+          "settings": {
+            "tab_label": "FOR WOMEN",
+            "collection": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

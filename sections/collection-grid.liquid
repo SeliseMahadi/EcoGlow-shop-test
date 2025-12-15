@@ -1,0 +1,146 @@
+<section class="container mx-auto px-4 pt-15">
+
+  <!-- Title -->
+  <div class="text-center mb-10">
+    {% if section.settings.title %}
+      <h2 class="font-bold text-4xl mb-4">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.subtitle %}
+      <p class="text-md">{{ section.settings.subtitle | newline_to_br }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Assign Collections -->
+  {% assign c1 = collections[section.settings.collection_1] %}
+  {% assign c2 = collections[section.settings.collection_2] %}
+  {% assign c3 = collections[section.settings.collection_3] %}
+  {% assign c4 = collections[section.settings.collection_4] %}
+  {% assign c5 = collections[section.settings.collection_5] %}
+
+  <!-- Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 auto-rows-[80px]">
+
+    <!-- COLLECTION 1 – Large -->
+    {% if c1 %}
+      <div class="col-span-2 row-span-7 py-10 px-10 bg-[#F1ECEC] bg-cover relative bg-center rounded-xl"
+           style="background-image: url('{{ c1.image | image_url: width: 800 }}');">
+        <a href="{{ c1.url }}" class="block h-full w-full">
+          <div class="absolute px-5 py-5 w-full left-0 bottom-0 bg-[#F1ECEC]/10">
+            <p class="text-lg font-bold text-black capitalize max-w-[90px] break-words">
+              {{ c1.title }}
+            </p>
+          </div>
+        </a>
+      </div>
+    {% endif %}
+
+    <!-- COLLECTION 2 -->
+    {% if c2 %}
+      <div class="col-span-1 row-span-4 py-10 px-10 bg-[#F1ECEC] bg-cover relative bg-center rounded-xl"
+           style="background-image: url('{{ c2.image | image_url: width: 800 }}');">
+        <a href="{{ c2.url }}" class="block h-full w-full">
+          <div class="absolute px-5 py-5 w-full left-0 bottom-0 bg-[#F1ECEC]/10">
+            <p class="text-lg font-bold text-black capitalize max-w-[90px] break-words">
+              {{ c2.title }}
+            </p>
+          </div>
+        </a>
+      </div>
+    {% endif %}
+
+    <!-- COLLECTION 3 -->
+    {% if c3 %}
+      <div class="col-span-1 row-span-3 py-10 px-10 bg-[#F1ECEC] bg-cover relative bg-center rounded-xl"
+           style="background-image: url('{{ c3.image | image_url: width: 800 }}');">
+        <a href="{{ c3.url }}" class="block h-full w-full">
+          <div class="absolute px-5 py-5 w-full left-0 bottom-0 bg-[#F1ECEC]/10">
+            <p class="text-lg font-bold text-black capitalize max-w-[90px] break-words">
+              {{ c3.title }}
+            </p>
+          </div>
+        </a>
+      </div>
+    {% endif %}
+
+    <!-- COLLECTION 4 -->
+    {% if c4 %}
+      <div class="col-span-1 row-span-4 py-10 px-10 bg-[#F1ECEC] bg-cover relative bg-center rounded-xl"
+           style="background-image: url('{{ c4.image | image_url: width: 800 }}');">
+        <a href="{{ c4.url }}" class="block h-full w-full">
+          <div class="absolute px-5 py-5 w-full left-0 bottom-0 bg-[#F1ECEC]/10">
+            <p class="text-lg font-bold text-black capitalize max-w-[90px] break-words">
+              {{ c4.title }}
+            </p>
+          </div>
+        </a>
+      </div>
+    {% endif %}
+
+    <!-- COLLECTION 5 -->
+    {% if c5 %}
+      <div class="col-span-1 row-span-3 py-10 px-10 bg-[#F1ECEC] bg-cover relative bg-center rounded-xl"
+           style="background-image: url('{{ c5.image | image_url: width: 800 }}');">
+        <a href="{{ c5.url }}" class="block h-full w-full">
+          <div class="absolute px-5 py-5 w-full left-0 bottom-0 bg-[#F1ECEC]/10">
+            <p class="text-lg font-bold text-black capitalize max-w-[90px] break-words">
+              {{ c5.title }}
+            </p>
+          </div>
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Egestas quam arcu convallis ipsum iaculis neque."
+    },
+    { "type": "header", "content": "Collections" },
+    {
+      "type": "collection",
+      "id": "collection_1",
+      "label": "Collection 1 (Large)"
+    },
+    {
+      "type": "collection",
+      "id": "collection_2",
+      "label": "Collection 2"
+    },
+    {
+      "type": "collection",
+      "id": "collection_3",
+      "label": "Collection 3"
+    },
+    {
+      "type": "collection",
+      "id": "collection_4",
+      "label": "Collection 4"
+    },
+    {
+      "type": "collection",
+      "id": "collection_5",
+      "label": "Collection 5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection Grid"
+    }
+  ]
+}
+{% endschema %}

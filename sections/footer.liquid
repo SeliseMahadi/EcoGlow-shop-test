@@ -1,30 +1,163 @@
-<footer class="site-footer">
-<div class="footer-inner">
-{% if section.settings.footer_menu != blank %}
-<nav class="footer-nav" aria-label="Footer">
-<ul>
-{% for link in section.settings.footer_menu.links %}
-<li><a href="{{ link.url }}">{{ link.title }}</a></li>
-{% endfor %}
-</ul>
-</nav>
-{% endif %}
-<div class="copyright">
-{{ section.settings.copyright | default: '© ' | append: shop.name }}
-</div>
-</div>
-</footer>
-
-
-{% schema %}
-{
-"name": "Footer",
-"settings": [
-{ "type": "link_list", "id": "footer_menu", "label": "Footer menu" },
-{ "type": "text", "id": "copyright", "label": "Copyright text", "default": "© " }
-],
-"presets": [
-{ "name": "Footer" }
-]
-}
-{% endschema %}
+<footer class="bg-[#444444] text-gray-300">
+    <div class="max-w-7xl mx-auto px-6 py-16">
+  
+      <!-- MAIN GRID -->
+      <div class="grid grid-cols-1 lg:grid-cols-6 gap-12">
+  
+        <!-- LEFT : LOGO + ADDRESS -->
+        <div class="lg:col-span-2">
+          {% if section.settings.logo != blank %}
+            <img
+              src="{{ section.settings.logo | image_url: width: 200 }}"
+              alt="{{ shop.name }}"
+              class="h-10 mb-6"
+            >
+          {% endif %}
+  
+          <p class="text-sm leading-relaxed mb-4">
+            {{ section.settings.address | newline_to_br }}
+          </p>
+  
+          <p class="text-sm">{{ section.settings.phone }}</p>
+          <p class="text-sm mb-6">{{ section.settings.email }}</p>
+  
+          <!-- Social -->
+          <div class="flex gap-4 mb-8 text-sm">
+            {% if section.settings.facebook != blank %}
+              <a href="{{ section.settings.facebook }}" class="hover:text-white">Facebook</a>
+            {% endif %}
+            {% if section.settings.instagram != blank %}
+              <a href="{{ section.settings.instagram }}" class="hover:text-white">Instagram</a>
+            {% endif %}
+            {% if section.settings.twitter != blank %}
+              <a href="{{ section.settings.twitter }}" class="hover:text-white">Twitter</a>
+            {% endif %}
+            {% if section.settings.youtube != blank %}
+              <a href="{{ section.settings.youtube }}" class="hover:text-white">YouTube</a>
+            {% endif %}
+          </div>
+  
+          <!-- Payment -->
+          <div>
+            <p class="text-sm mb-3">Payment Method</p>
+            <div class="flex gap-3 flex-wrap">
+              {% for type in shop.enabled_payment_types %}
+                <span class="text-xs bg-gray-600 px-2 py-1 rounded">
+                  {{ type | capitalize }}
+                </span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+  
+        <!-- RIGHT : 4 MENUS (FIXED ONE ROW) -->
+        <div class="lg:col-span-4">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+  
+            {% for block in section.blocks %}
+              <div {{ block.shopify_attributes }}>
+                <h4 class="text-white font-semibold mb-4">
+                  {{ block.settings.title }}
+                </h4>
+  
+                <ul class="space-y-2 text-sm">
+                  {% for link in linklists[block.settings.menu].links %}
+                    <li>
+                      <a href="{{ link.url }}" class="hover:text-white">
+                        {{ link.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endfor %}
+  
+          </div>
+        </div>
+  
+      </div>
+  
+      <!-- DIVIDER -->
+      <div class="border-t border-gray-600 my-12"></div>
+  
+      <!-- NEWSLETTER -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+        <div>
+          <h4 class="text-white font-semibold mb-2">
+            {{ section.settings.newsletter_title }}
+          </h4>
+          <p class="text-sm text-gray-400 max-w-md">
+            {{ section.settings.newsletter_text }}
+          </p>
+        </div>
+  
+        <div>
+          {% form 'customer' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+  
+            <label class="text-sm block mb-2">Email Address</label>
+            <div class="flex">
+              <input
+                type="email"
+                name="contact[email]"
+                required
+                placeholder="Enter your email address"
+                class="w-full bg-gray-600 text-white px-4 py-3 outline-none"
+              >
+              <button
+                type="submit"
+                class="bg-gray-700 px-4 text-white"
+              >
+                →
+              </button>
+            </div>
+          {% endform %}
+        </div>
+      </div>
+  
+      <!-- BOTTOM -->
+      <div class="mt-12 text-sm text-gray-400">
+        © {{ 'now' | date: '%Y' }} – {{ shop.name }}. All rights reserved.
+      </div>
+  
+    </div>
+  </footer>
+  
+  {% schema %}
+  {
+    "name": "Footer",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Footer logo" },
+      { "type": "textarea", "id": "address", "label": "Address" },
+      { "type": "text", "id": "phone", "label": "Phone" },
+      { "type": "text", "id": "email", "label": "Email" },
+      { "type": "url", "id": "facebook", "label": "Facebook URL" },
+      { "type": "url", "id": "instagram", "label": "Instagram URL" },
+      { "type": "url", "id": "twitter", "label": "Twitter URL" },
+      { "type": "url", "id": "youtube", "label": "YouTube URL" },
+      {
+        "type": "text",
+        "id": "newsletter_title",
+        "label": "Newsletter title",
+        "default": "Newsletter"
+      },
+      {
+        "type": "textarea",
+        "id": "newsletter_text",
+        "label": "Newsletter text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "menu",
+        "name": "Footer menu",
+        "settings": [
+          { "type": "text", "id": "title", "label": "Menu title" },
+          { "type": "link_list", "id": "menu", "label": "Menu" }
+        ]
+      }
+    ],
+    "max_blocks": 4
+  }
+  {% endschema %}
+  
