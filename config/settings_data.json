@@ -46,7 +46,7 @@
         "type": "collection-grid",
         "settings": {
           "title": "Featured Collection",
-          "subtitle": "Egestas quam arcu convallis ipsum iaculis neque.",
+          "subtitle": "Egestas quam arcu convallis ipsum iaculis neque. Volutpat venenatis\n tincidunt non fermentum a velit ut.",
           "collection_1": "tshirt",
           "collection_2": "pants",
           "collection_3": "hoodie",
@@ -56,6 +56,26 @@
       },
       "product-with-tab": {
         "type": "product-with-tab",
+        "blocks": {
+          "tab_rxrXcB": {
+            "type": "tab",
+            "settings": {
+              "tab_label": "For Women",
+              "collection": "for-women"
+            }
+          },
+          "tab_7nbmGF": {
+            "type": "tab",
+            "settings": {
+              "tab_label": "For Men",
+              "collection": "for-men"
+            }
+          }
+        },
+        "block_order": [
+          "tab_rxrXcB",
+          "tab_7nbmGF"
+        ],
         "settings": {
           "heading": "Latest Collections",
           "subtitle": "Egestas quam arcu convallis ipsum iaculis neque. Volutpat venenatis tincidunt non fermentum a velit ut.",
