@@ -90,7 +90,11 @@
           "heading": "Introducing Our Summer Collection, Now available!",
           "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sollicitudin odio pellentesque nec sed.",
           "button_text": "SHOP NOW",
-          "button_link": ""
+          "button_link": "",
+          "image_1": "shopify://shop_images/1dc9331a4b7fe3e59b771f3adaf15f33c70cc893_1.png",
+          "image_2": "shopify://shop_images/c14181640aed27fe1c6ecd34c902d1ad76a1bc1a_1.png",
+          "image_3": "shopify://shop_images/Product_Image_1.png",
+          "image_4": "shopify://shop_images/Product_Image_3.png"
         }
       },
       "limited-offer": {
